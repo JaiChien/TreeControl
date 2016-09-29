@@ -4,6 +4,7 @@
 	Self.TreePool = null;
 	Self.idVar = null;
 	Self.idVar = null;
+	Self.taVar = null;
 
 	Self.parentNodes = [];
 	Self.saveParentNode = function(parent){
@@ -13,15 +14,16 @@
 	Self.searchTreeByNode = function(nodes, node){
 		var result = null;
 		for(var index in nodes){
-			if(nodes[index].value==node.value){
+			if(nodes[index][Self.taVar]==node[Self.taVar]){
 				result = nodes[index];
 			}else{
-				var temp = Self.searchTreeByNode(nodes[index].child, node);
-				if(temp){
-					result = temp;
-					Self.saveParentNode(nodes[index])
+				if(nodes[index].child.length>0){
+					var temp = Self.searchTreeByNode(nodes[index].child, node);
+					if(temp){
+						result = temp;
+						Self.saveParentNode(nodes[index])
+					}
 				}
-				
 			}
 		}
 		return result;
@@ -33,7 +35,8 @@
 			Self.childVar = childVar;
 			Self.TreePool = tree;
 		},
-		searchTreeByNode:function(node){
+		searchTreeByNode:function(taVar, node){
+			Self.taVar = taVar;
 			var taNode = Self.searchTreeByNode(Self.TreePool, node);
 			return {
 				taNode:taNode,
@@ -48,51 +51,51 @@
 var treeData = [
 	{
 		id:0,
-		value:'A',
+		name:'A',
 		child:[]
 	},
 	{
 		id:1,
-		value:'B',
+		name:'B',
 		child:[
 			{
 				id:6,
-				value:'G',
+				name:'G',
 				child:[]
 			},
 			{
 				id:7,
-				value:'H',
+				name:'H',
 				child:[
 					{
 						id:15,
-						value:'P',
+						name:'P',
 						child:[]
 					},
 				]
 			},
 			{
 				id:8,
-				value:'I',
+				name:'I',
 				child:[]
 			},
 		]	
 	},
 	{
 		id:2,
-		value:'C',
+		name:'C',
 		child:[
 			{
 				id:9,
-				value:'J',
+				name:'J',
 				child:[
 					{
 						id:16,
-						value:'Q',
+						name:'Q',
 						child:[
 							{
 								id:18,
-								value:'S',
+								name:'S',
 								child:[]
 							},
 						]
@@ -101,11 +104,11 @@ var treeData = [
 			},
 			{
 				id:10,
-				value:'K',
+				name:'K',
 				child:[
 					{
 						id:17,
-						value:'R',
+						name:'R',
 						child:[]
 					},
 				]
@@ -114,28 +117,28 @@ var treeData = [
 	},
 	{
 		id:3,
-		value:'D',
+		name:'D',
 		child:[
 			{
 				id:11,
-				value:'L',
+				name:'L',
 				child:[]
 			},
 			{
 				id:12,
-				value:'M',
+				name:'M',
 				child:[
 					{
 						id:19,
-						value:'T',
+						name:'T',
 						child:[
 							{
 								id:20,
-								value:'U',
+								name:'U',
 								child:[
 									{
 										id:21,
-										value:'V',
+										name:'V',
 										child:[]
 									},
 								]
@@ -148,30 +151,30 @@ var treeData = [
 	},
 	{
 		id:4,
-		value:'E',
+		name:'E',
 		child:[]
 	},
 	{
 		id:5,
-		value:'F',
+		name:'F',
 		child:[
 			{
 				id:13,
-				value:'N',
+				name:'N',
 				child:[]
 			},
 			{
 				id:14,
-				value:'O',
+				name:'O',
 				child:[]
 			}
 		]
 	},
 ];
 tree.setTree('id', 'child', treeData);
-var result = tree.searchTreeByNode({
+var result = tree.searchTreeByNode('name', {
 										id:21,
-										value:'V',
+										name:'V',
 										child:[]
 									});
 console.log(result);
