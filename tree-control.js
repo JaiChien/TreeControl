@@ -11,14 +11,14 @@
 		Self.parentNodes.push(parent);
 	}
 
-	Self.searchTreeByNode = function(nodes, node){
+	Self.searchTreeByVar = function(nodes, node){
 		var result = null;
 		for(var index in nodes){
 			if(nodes[index][Self.taVar]==node[Self.taVar]){
 				result = nodes[index];
 			}else{
 				if(nodes[index].child.length>0){
-					var temp = Self.searchTreeByNode(nodes[index].child, node);
+					var temp = Self.searchTreeByVar(nodes[index].child, node);
 					if(temp){
 						result = temp;
 						Self.saveParentNode(nodes[index])
@@ -35,9 +35,11 @@
 			Self.childVar = childVar;
 			Self.TreePool = tree;
 		},
-		searchTreeByNode:function(taVar, node){
+		searchTreeByVar:function(taVar, value){
 			Self.taVar = taVar;
-			var taNode = Self.searchTreeByNode(Self.TreePool, node);
+			var node = {};
+			node[taVar] = value;
+			var taNode = Self.searchTreeByVar(Self.TreePool, node);
 			return {
 				taNode:taNode,
 				parentNodes:Self.parentNodes,
@@ -172,9 +174,5 @@ var treeData = [
 	},
 ];
 tree.setTree('id', 'child', treeData);
-var result = tree.searchTreeByNode('name', {
-										id:21,
-										name:'V',
-										child:[]
-									});
+var result = tree.searchTreeByVar('id', 21);
 console.log(result);
