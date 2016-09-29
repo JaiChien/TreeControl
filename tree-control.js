@@ -3,7 +3,6 @@
 	var Self = this;
 	Self.TreePool = null;
 	Self.idVar = null;
-	Self.idVar = null;
 	Self.taVar = null;
 
 	Self.parentNodes = [];
@@ -41,7 +40,7 @@
 			node[taVar] = value;
 			var taNode = Self.searchTreeByVar(Self.TreePool, node);
 			return {
-				taNode:taNode,
+				node:taNode,
 				parentNodes:Self.parentNodes,
 			};
 		}
